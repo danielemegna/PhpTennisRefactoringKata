@@ -28,34 +28,28 @@ class TennisGame1 implements TennisGame
 	public function getScore()
 	{
 		if ($this->player1Score == $this->player2Score) {
-			switch ($this->player1Score) {
-				case 0:
-					return "Love-All";
-				case 1:
-					return "Fifteen-All";
-				case 2:
-					return "Thirty-All";
-				default:
-					return "Deuce";
-			}
+      $tieScore = $this->player1Score;
+
+      if($tieScore > 2)
+        return "Deuce";
+      
+      return $this->scoreToString($tieScore)."-All";
 		}
     
-    if ($this->player1Score >= 4 || $this->player2Score >= 4) {
-			$minusResult = $this->player1Score - $this->player2Score;
-				if ($minusResult == 1)
-          return "Advantage player1";
-				if ($minusResult == -1)
-          return "Advantage player2";
-				if ($minusResult >= 2)
-          return "Win for player1";
+    if ($this->player1Score > 3 || $this->player2Score > 3) {
+			$scoreDiff = $this->player1Score - $this->player2Score;
+      if ($scoreDiff == 1)
+        return "Advantage " . $this->player1Name;
+      if ($scoreDiff == -1)
+        return "Advantage " . $this->player2Name;
+      if ($scoreDiff >= 2)
+        return "Win for " . $this->player1Name;
 
-				return "Win for player2";
+      return "Win for " . $this->player2Name;
 		}
 
-    $score = $this->scoreToString($this->player1Score);
-    $score .= "-";
-    $score.= $this->scoreToString($this->player2Score);
-		return $score;
+    return $this->scoreToString($this->player1Score)
+      . "-" . $this->scoreToString($this->player2Score);
 	}
 
   private function scoreToString($score) {
