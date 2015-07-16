@@ -4,15 +4,17 @@ require_once "TennisGame.php";
 
 class TennisGame1 implements TennisGame
 {
-  private $player1Score = 0;
-  private $player2Score = 0;
-  private $player1Name = '';
-  private $player2Name = '';
+  private $player1Name;
+  private $player1Score;
+  private $player2Name;
+  private $player2Score;
 
   public function __construct($player1Name, $player2Name)
   {
     $this->player1Name = $player1Name;
+    $this->player1Score = 0;
     $this->player2Name = $player2Name;
+    $this->player2Score = 0;
   }
 
   public function wonPoint($playerName)
