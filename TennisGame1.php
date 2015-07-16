@@ -27,49 +27,48 @@ class TennisGame1 implements TennisGame
 
 	public function getScore()
 	{
-		$score = "";
 		if ($this->player1Score == $this->player2Score) {
 			switch ($this->player1Score) {
 				case 0:
-					$score = "Love-All";
-					break;
+					return "Love-All";
 				case 1:
-					$score = "Fifteen-All";
-					break;
+					return "Fifteen-All";
 				case 2:
-					$score = "Thirty-All";
-					break;
+					return "Thirty-All";
 				default:
-					$score = "Deuce";
-					break;
-			}
-		} elseif ($this->player1Score >= 4 || $this->player2Score >= 4) {
-			$minusResult = $this->player1Score - $this->player2Score;
-				if ($minusResult == 1) $score = "Advantage player1";
-				elseif ($minusResult == -1) $score = "Advantage player2";
-				elseif ($minusResult >= 2) $score = "Win for player1";
-				else $score = "Win for player2";
-		} else {
-			for ($i = 1; $i < 3; $i++) {
-				if ($i == 1) $tempScore = $this->player1Score;
-				else { $score .= "-"; $tempScore = $this->player2Score;}
-				switch ($tempScore) {
-					case 0:
-						$score .= "Love";
-						break;
-					case 1:
-						$score .= "Fifteen";
-						break;
-					case 2:
-						$score .= "Thirty";
-						break;
-					case 3:
-						$score .= "Forty";
-						break;
-				}
+					return "Deuce";
 			}
 		}
+    
+    if ($this->player1Score >= 4 || $this->player2Score >= 4) {
+			$minusResult = $this->player1Score - $this->player2Score;
+				if ($minusResult == 1)
+          return "Advantage player1";
+				if ($minusResult == -1)
+          return "Advantage player2";
+				if ($minusResult >= 2)
+          return "Win for player1";
+
+				return "Win for player2";
+		}
+
+    $score = $this->scoreToString($this->player1Score);
+    $score .= "-";
+    $score.= $this->scoreToString($this->player2Score);
 		return $score;
 	}
+
+  private function scoreToString($score) {
+    switch ($score) {
+      case 0:
+        return "Love";
+      case 1:
+        return "Fifteen";
+      case 2:
+        return "Thirty";
+      case 3:
+        return "Forty";
+    }
+  }
 }
 
