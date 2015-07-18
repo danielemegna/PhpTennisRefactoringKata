@@ -4,15 +4,17 @@ require_once "TennisGame.php";
 
 class TennisGame2 implements TennisGame
 {
-  private $P1point = 0;
-  private $P2point = 0;
-  private $P1name = "";
-  private $P2name = "";
+  private $P1name;
+  private $P2name;
+  private $P1point;
+  private $P2point;
 
   public function __construct($P1name, $P2name)
   {
     $this->P1name = $P1name;
     $this->P2name = $P2name;
+    $this->P1point = 0;
+    $this->P2point = 0;
   }
 
   public function getScore()
