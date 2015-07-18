@@ -32,23 +32,8 @@ class TennisGame2 implements TennisGame
     if ($this->P2point > $this->P1point && $this->P1point >= 3)
       return "Advantage " . $this->P2name;
 
-    if ($this->P1point == 0)
-      $this->P1res = "Love";
-    if ($this->P1point == 1)
-      $this->P1res = "Fifteen";
-    if ($this->P1point == 2)
-      $this->P1res = "Thirty";
-    if ($this->P1point == 3)
-      $this->P1res = "Forty";
-
-    if ($this->P2point == 0)
-      $this->P2res = "Love";
-    if ($this->P2point == 1)
-      $this->P2res = "Fifteen";
-    if ($this->P2point == 2)
-      $this->P2res = "Thirty";
-    if ($this->P2point == 3)
-      $this->P2res = "Forty";
+    $this->P1res = $this->scoreToString($this->P1point);
+    $this->P2res = $this->scoreToString($this->P2point);
 
     if ($this->P1point == $this->P2point) {
       if($this->P1point >= 3)
@@ -58,6 +43,17 @@ class TennisGame2 implements TennisGame
     }
 
     return "{$this->P1res}-{$this->P2res}";
+  }
+
+  private function scoreToString($score) {
+    if ($score == 0)
+      return "Love";
+    if ($score == 1)
+      return "Fifteen";
+    if ($score == 2)
+      return "Thirty";
+    if ($score == 3)
+      return "Forty";
   }
 
   private function SetP1Score($number)
