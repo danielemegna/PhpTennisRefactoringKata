@@ -21,18 +21,19 @@ class TennisGame2 implements TennisGame
   public function getScore()
   {
     $score = "";
-    if ($this->P1point == $this->P2point && $this->P1point < 4) {
-      if ($this->P1point==0)
-        $score = "Love";
-      if ($this->P1point==1)
-        $score = "Fifteen";
-      if ($this->P1point==2)
-        $score = "Thirty";
-      $score .= "-All";
+    if ($this->P1point == $this->P2point) {
+      if($this->P1point < 4) {
+        if ($this->P1point==0)
+          $score = "Love";
+        if ($this->P1point==1)
+          $score = "Fifteen";
+        if ($this->P1point==2)
+          $score = "Thirty";
+        $score .= "-All";
+      }
+      if($this->P1point >= 3)
+        $score = "Deuce";
     }
-
-    if ($this->P1point == $this->P2point && $this->P1point >= 3)
-      $score = "Deuce";
 
     if ($this->P1point > 0 && $this->P2point == 0) {
       if ($this->P1point == 1)
