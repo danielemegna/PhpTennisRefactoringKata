@@ -35,28 +35,26 @@ class TennisGame2 implements TennisGame
     $player2Score = $this->player2->getScore();
     
     if ($player1Score == $player2Score) {
-      if($player1Score > 2)
-        return $this->scoreFormatter->deuceString();
-
-      return $this->scoreFormatter->tieString($player1Score);
+      return ($player1Score < 3 ?
+        $this->scoreFormatter->tieString($player1Score) :
+        $this->scoreFormatter->deuceString()
+      );
     }
+
+    if($player1Score < 4 && $player2Score < 4) {
+      return $this->scoreFormatter->scoreToString($player1Score)
+        ."-".$this->scoreFormatter->scoreToString($player2Score);
+    }
+
+    $advantagedPlayerName = ($player1Score > $player2Score ?
+      $this->player1->getName() :
+      $this->player2->getName()
+    );
     
-    $scoreDiff = ($player1Score - $player2Score);
-    if ($player1Score > 3 && $scoreDiff > 1)
-      return $this->scoreFormatter->winString($this->player1->getName());
+    if(abs($player1Score - $player2Score) == 1)
+      return $this->scoreFormatter->advantageString($advantagedPlayerName);
 
-    if ($player2Score > 3 && $scoreDiff < -1)
-      return $this->scoreFormatter->winString($this->player2->getName());
-
-    if ($player1Score > 2 && $scoreDiff == -1)
-      return $this->scoreFormatter->advantageString($this->player2->getName());
-
-    if ($player2Score > 2 && $scoreDiff == 1)
-      return $this->scoreFormatter->advantageString($this->player1->getName());
-
-    $p1ScoreToString = $this->scoreFormatter->scoreToString($player1Score);
-    $p2ScoreToString = $this->scoreFormatter->scoreToString($player2Score);
-    return "{$p1ScoreToString}-{$p2ScoreToString}";
+    return $this->scoreFormatter->winString($advantagedPlayerName);
   }
 
 }
