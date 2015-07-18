@@ -17,6 +17,14 @@ class TennisGame2 implements TennisGame
     $this->P2point = 0;
   }
 
+  public function wonPoint($player)
+  {
+    if ($player == $this->P1name)
+      $this->P1Score();
+    else
+      $this->P2Score();
+  }
+
   public function getScore()
   {
     if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2)
@@ -63,13 +71,5 @@ class TennisGame2 implements TennisGame
   private function P2Score()
   {
     $this->P2point++;
-  }
-
-  public function wonPoint($player)
-  {
-    if ($player == $this->P1name)
-      $this->P1Score();
-    else
-      $this->P2Score();
   }
 }
