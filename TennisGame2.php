@@ -55,21 +55,6 @@ class TennisGame2 implements TennisGame
       return "Forty";
   }
 
-  private function SetP1Score($number)
-  {
-    for ($i = 0; $i < $number; $i++) {
-      $this->P1Score();
-    }
-
-  }
-
-  private function SetP2Score($number)
-  {
-    for ($i = 0; $i < $number; $i++) {
-      $this->P2Score();
-    }
-  }
-
   private function P1Score()
   {
     $this->P1point++;
