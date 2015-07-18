@@ -9,13 +9,13 @@ class TennisGame2 implements TennisGame
 
   private $P1res = "";
   private $P2res = "";
-  private $player1Name = "";
-  private $player2Name = "";
+  private $P1name = "";
+  private $P2name = "";
 
-  public function __construct($player1Name, $player2Name)
+  public function __construct($P1name, $P2name)
   {
-    $this->player1Name = $player1Name;
-    $this->player2Name = $player2Name;
+    $this->P1name = $P1name;
+    $this->P2name = $P2name;
   }
 
   public function getScore()
@@ -82,19 +82,19 @@ class TennisGame2 implements TennisGame
     }
 
     if ($this->P1point > $this->P2point && $this->P2point >= 3) {
-      $score = "Advantage player1";
+      $score = "Advantage " . $this->P1name;
     }
 
     if ($this->P2point > $this->P1point && $this->P1point >= 3) {
-      $score = "Advantage player2";
+      $score = "Advantage " . $this->P2name;
     }
 
     if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
-      $score = "Win for player1";
+      $score = "Win for " . $this->P1name;
     }
 
     if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2) {
-      $score = "Win for player2";
+      $score = "Win for " . $this->P2name;
     }
 
     return $score;
@@ -127,7 +127,7 @@ class TennisGame2 implements TennisGame
 
   public function wonPoint($player)
   {
-    if ($player == "player1")
+    if ($player == $this->P1name)
       $this->P1Score();
     else
       $this->P2Score();
