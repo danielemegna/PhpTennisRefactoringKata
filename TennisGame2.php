@@ -14,67 +14,57 @@ class TennisGame2 implements TennisGame
     $this->player2 = new Player($P2name);
   }
 
-  public function wonPoint($player)
+  public function wonPoint($playerName)
   {
-    if ($player == $this->player1->getName())
-      $this->P1Score();
-    else
-      $this->P2Score();
+    if ($playerName == $this->player1->getName()) {
+      $this->player1->increaseScore();
+      return;
+    }
+
+    $this->player2->increaseScore();
   }
 
   public function getScore()
   {
     $player1Score = $this->player1->getScore();
     $player2Score = $this->player2->getScore();
+    $scoreDiff = ($player1Score - $player2Score);
 
-    $pointDiff = ($player1Score - $player2Score);
-    if ($player1Score > 3 && $pointDiff > 1)
-      return "Win for " . $this->player1->getName();
-
-    if ($player2Score > 3 && $pointDiff < -1)
-      return "Win for " . $this->player2->getName();
-
-    if ($player1Score > 2 && $pointDiff < 0)
-      return "Advantage " . $this->player2->getName();
-
-    if ($player2Score > 2 && $pointDiff > 0)
-      return "Advantage " . $this->player1->getName();
-
-
-    if ($pointDiff == 0) {
+    if ($scoreDiff == 0) {
       if($player1Score >= 3)
         return "Deuce";
 
       $p1ScoreToString = $this->scoreToString($player1Score);
       $p2ScoreToString = "All";
-    } else {
-      $p1ScoreToString = $this->scoreToString($player1Score);
-      $p2ScoreToString = $this->scoreToString($player2Score);
+      return "{$p1ScoreToString}-{$p2ScoreToString}";
     }
+
+    if ($player1Score > 3 && $scoreDiff > 1)
+      return "Win for " . $this->player1->getName();
+
+    if ($player2Score > 3 && $scoreDiff < -1)
+      return "Win for " . $this->player2->getName();
+
+    if ($player1Score > 2 && $scoreDiff < 0)
+      return "Advantage " . $this->player2->getName();
+
+    if ($player2Score > 2 && $scoreDiff > 0)
+      return "Advantage " . $this->player1->getName();
+
+    $p1ScoreToString = $this->scoreToString($player1Score);
+    $p2ScoreToString = $this->scoreToString($player2Score);
 
     return "{$p1ScoreToString}-{$p2ScoreToString}";
   }
 
   private function scoreToString($score) {
-    if ($score == 0)
-      return "Love";
-    if ($score == 1)
-      return "Fifteen";
-    if ($score == 2)
-      return "Thirty";
-    if ($score == 3)
-      return "Forty";
+    $dictionary = [
+      0 => "Love",
+      1 => "Fifteen",
+      2 => "Thirty",
+      3 => "Forty",
+    ];
 
-    throw new Exception("Cannot get string for score '$score'");
-  }
-
-  private function P1Score()
-  {
-    $this->player1->increaseScore();
-  }
-
-  private function P2Score()
-  {
-    $this->player2->increaseScore();
+    return $dictionary[$score];
   }
 }
