@@ -27,26 +27,29 @@ class TennisGame2 implements TennisGame
 
   public function getScore()
   {
-    if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2)
+    $pointDiff = ($this->P1point - $this->P2point);
+    if ($this->P1point > 3 && $pointDiff > 1)
       return "Win for " . $this->P1name;
 
-    if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2)
+    if ($this->P2point > 3 && $pointDiff < -1)
       return "Win for " . $this->P2name;
 
-    if ($this->P1point > $this->P2point && $this->P2point >= 3)
-      return "Advantage " . $this->P1name;
-
-    if ($this->P2point > $this->P1point && $this->P1point >= 3)
+    if ($this->P1point > 2 && $pointDiff < 0)
       return "Advantage " . $this->P2name;
 
-    $p1ScoreToString = $this->scoreToString($this->P1point);
-    $p2ScoreToString = $this->scoreToString($this->P2point);
+    if ($this->P2point > 2 && $pointDiff > 0)
+      return "Advantage " . $this->P1name;
 
-    if ($this->P1point == $this->P2point) {
+
+    if ($pointDiff == 0) {
       if($this->P1point >= 3)
         return "Deuce";
 
+      $p1ScoreToString = $this->scoreToString($this->P1point);
       $p2ScoreToString = "All";
+    } else {
+      $p1ScoreToString = $this->scoreToString($this->P1point);
+      $p2ScoreToString = $this->scoreToString($this->P2point);
     }
 
     return "{$p1ScoreToString}-{$p2ScoreToString}";
