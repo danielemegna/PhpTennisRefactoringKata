@@ -6,9 +6,6 @@ class TennisGame2 implements TennisGame
 {
   private $P1point = 0;
   private $P2point = 0;
-
-  private $P1res = "";
-  private $P2res = "";
   private $P1name = "";
   private $P2name = "";
 
@@ -32,17 +29,17 @@ class TennisGame2 implements TennisGame
     if ($this->P2point > $this->P1point && $this->P1point >= 3)
       return "Advantage " . $this->P2name;
 
-    $this->P1res = $this->scoreToString($this->P1point);
-    $this->P2res = $this->scoreToString($this->P2point);
+    $p1ScoreToString = $this->scoreToString($this->P1point);
+    $p2ScoreToString = $this->scoreToString($this->P2point);
 
     if ($this->P1point == $this->P2point) {
       if($this->P1point >= 3)
         return "Deuce";
 
-      $this->P2res = "All";
+      $p2ScoreToString = "All";
     }
 
-    return "{$this->P1res}-{$this->P2res}";
+    return "{$p1ScoreToString}-{$p2ScoreToString}";
   }
 
   private function scoreToString($score) {
