@@ -2,16 +2,21 @@
 
 require_once "TennisGame.php";
 require_once "Player.php";
+require_once "ScoreFormatter.php";
 
 class TennisGame2 implements TennisGame
 {
   private $player1;
   private $player2;
 
+  private $scoreFormatter;
+
   public function __construct($P1name, $P2name)
   {
     $this->player1 = new Player($P1name);
     $this->player2 = new Player($P2name);
+
+    $this->scoreFormatter = new ScoreFormatter();
   }
 
   public function wonPoint($playerName)
@@ -32,52 +37,26 @@ class TennisGame2 implements TennisGame
 
     if ($scoreDiff == 0) {
       if($player1Score >= 3)
-        return $this->deuceString();
+        return $this->scoreFormatter->deuceString();
 
-      return $this->tieString($player1Score);
+      return $this->scoreFormatter->tieString($player1Score);
     }
 
     if ($player1Score > 3 && $scoreDiff > 1)
-      return $this->winString($this->player1);
+      return $this->scoreFormatter->winString($this->player1->getName());
 
     if ($player2Score > 3 && $scoreDiff < -1)
-      return $this->winString($this->player2);
+      return $this->scoreFormatter->winString($this->player2->getName());
 
     if ($player1Score > 2 && $scoreDiff < 0)
-      return $this->advantageString($this->player2);
+      return $this->scoreFormatter->advantageString($this->player2->getName());
 
     if ($player2Score > 2 && $scoreDiff > 0)
-      return $this->advantageString($this->player1);
+      return $this->scoreFormatter->advantageString($this->player1->getName());
 
-    $p1ScoreToString = $this->scoreToString($player1Score);
-    $p2ScoreToString = $this->scoreToString($player2Score);
+    $p1ScoreToString = $this->scoreFormatter->scoreToString($player1Score);
+    $p2ScoreToString = $this->scoreFormatter->scoreToString($player2Score);
     return "{$p1ScoreToString}-{$p2ScoreToString}";
   }
 
-  private function winString($player) {
-    return "Win for " . $player->getName();
-  }
-
-  private function advantageString($player) {
-    return "Advantage " . $player->getName();
-  }
-
-  private function deuceString() {
-    return "Deuce";
-  }
-
-  private function tieString($score) {
-    return $this->scoreToString($score)."-All";
-  }
-
-  private function scoreToString($score) {
-    $dictionary = [
-      0 => "Love",
-      1 => "Fifteen",
-      2 => "Thirty",
-      3 => "Forty",
-    ];
-
-    return $dictionary[$score];
-  }
 }
