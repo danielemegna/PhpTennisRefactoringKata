@@ -20,6 +20,19 @@ class TennisGame2 implements TennisGame
 
   public function getScore()
   {
+    if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2)
+      return "Win for " . $this->P1name;
+
+    if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2)
+      return "Win for " . $this->P2name;
+
+    if ($this->P1point > $this->P2point && $this->P2point >= 3)
+      return "Advantage " . $this->P1name;
+
+    if ($this->P2point > $this->P1point && $this->P1point >= 3)
+      return "Advantage " . $this->P2name;
+
+
     $score = "";
     if ($this->P1point == $this->P2point) {
       if($this->P1point < 4) {
@@ -60,22 +73,6 @@ class TennisGame2 implements TennisGame
         $this->P2res = "Forty";
 
       $score = "{$this->P1res}-{$this->P2res}";
-    }
-
-    if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
-      return "Win for " . $this->P1name;
-    }
-
-    if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2) {
-      return "Win for " . $this->P2name;
-    }
-
-    if ($this->P1point > $this->P2point && $this->P2point >= 3) {
-      return "Advantage " . $this->P1name;
-    }
-
-    if ($this->P2point > $this->P1point && $this->P1point >= 3) {
-      return "Advantage " . $this->P2name;
     }
 
     return $score;
