@@ -31,30 +31,42 @@ class TennisGame2 implements TennisGame
 
   public function getScore()
   {
-    $player1Score = $this->player1->getScore();
-    $player2Score = $this->player2->getScore();
-    
-    if ($player1Score == $player2Score) {
-      return ($player1Score < 3 ?
-        $this->scoreFormatter->tieString($player1Score) :
-        $this->scoreFormatter->deuceString()
+    if($this->thereIsATie())
+      return $this->scoreFormatter->tieMessage($this->player1->getScore());
+
+    if($this->areScoresUnderFour()) {
+      return $this->scoreFormatter->defaultMessage(
+        $this->player1->getScore(),
+        $this->player2->getScore()
       );
     }
 
-    if($player1Score < 4 && $player2Score < 4) {
-      return $this->scoreFormatter->scoreToString($player1Score)
-        ."-".$this->scoreFormatter->scoreToString($player2Score);
-    }
+    $advantagedPlayerName = $this->getAdvantagedPlayerName();
 
-    $advantagedPlayerName = ($player1Score > $player2Score ?
-      $this->player1->getName() :
-      $this->player2->getName()
-    );
-    
-    if(abs($player1Score - $player2Score) == 1)
-      return $this->scoreFormatter->advantageString($advantagedPlayerName);
+    if($this->isOneTheScoreDifference())
+      return $this->scoreFormatter->advantageMessage($advantagedPlayerName);
 
-    return $this->scoreFormatter->winString($advantagedPlayerName);
+    return $this->scoreFormatter->winMessage($advantagedPlayerName);
   }
 
+  private function thereIsATie() {
+    return $this->player1->getScore() == $this->player2->getScore();
+  }
+
+  private function areScoresUnderFour() {
+    return $this->player1->getScore() < 4 &&
+      $this->player2->getScore() < 4;
+  }
+
+  private function getAdvantagedPlayerName() {
+    if($this->player1->getScore() > $this->player2->getScore())
+      return $this->player1->getName();
+      
+    return $this->player2->getName();
+  }
+
+  private function isOneTheScoreDifference() {
+    $scoreDifference = $this->player1->getScore() - $this->player2->getScore();
+    return (abs($scoreDifference) == 1);
+  }
 }

@@ -2,23 +2,31 @@
 
 class ScoreFormatter
 {
-  public function winString($playerName) {
+  public function defaultMessage($player1Score, $player2Score) {
+    return $this->scoreToString($player1Score)."-".
+      $this->scoreToString($player2Score);
+  }
+
+  public function tieMessage($score) {
+    return ($score < 3 ?
+      $this->scoreToString($score)."-All" : 
+      $this->deuceString()
+    );
+  }
+
+  public function winMessage($playerName) {
     return "Win for " . $playerName;
   }
 
-  public function advantageString($playerName) {
+  public function advantageMessage($playerName) {
     return "Advantage " . $playerName;
   }
 
-  public function deuceString() {
+  private function deuceString() {
     return "Deuce";
   }
 
-  public function tieString($score) {
-    return $this->scoreToString($score)."-All";
-  }
-
-  public function scoreToString($score) {
+  private function scoreToString($score) {
     $dictionary = [
       0 => "Love",
       1 => "Fifteen",
