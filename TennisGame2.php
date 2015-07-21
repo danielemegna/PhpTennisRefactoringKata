@@ -3,7 +3,7 @@
 require_once "TennisGame.php";
 require_once "Player.php";
 require_once "ScoreFormatter.php";
-require_once "ScoreBoard.php";
+require_once "ScoreKeeper.php";
 
 class TennisGame2 implements TennisGame
 {
@@ -11,7 +11,7 @@ class TennisGame2 implements TennisGame
   private $player2;
 
   private $scoreFormatter;
-  private $scoreBoard;
+  private $scoreKeeper;
 
   public function __construct($player1Name, $player2Name)
   {
@@ -19,41 +19,41 @@ class TennisGame2 implements TennisGame
     $this->player2 = new Player($player2Name);
 
     $this->scoreFormatter = new ScoreFormatter();
-    $this->scoreBoard = new ScoreBoard();
+    $this->scoreKeeper = new ScoreKeeper();
   }
 
   public function wonPoint($playerName)
   {
     if ($playerName == $this->player1->getName()) {
-      $this->scoreBoard->increasePlayer1Score();
+      $this->scoreKeeper->increasePlayer1Score();
       return;
     }
 
-    $this->scoreBoard->increasePlayer2Score();
+    $this->scoreKeeper->increasePlayer2Score();
   }
 
   public function getScore()
   {
-    if($this->scoreBoard->thereIsATie())
-      return $this->scoreFormatter->tieMessage($this->scoreBoard->getPlayer1Score());
+    if($this->scoreKeeper->thereIsATie())
+      return $this->scoreFormatter->tieMessage($this->scoreKeeper->getPlayer1Score());
 
-    if($this->scoreBoard->areScoresUnderFour()) {
+    if($this->scoreKeeper->areScoresUnderFour()) {
       return $this->scoreFormatter->defaultMessage(
-        $this->scoreBoard->getPlayer1Score(),
-        $this->scoreBoard->getPlayer2Score()
+        $this->scoreKeeper->getPlayer1Score(),
+        $this->scoreKeeper->getPlayer2Score()
       );
     }
 
     $advantagedPlayerName = $this->getAdvantagedPlayerName();
 
-    if($this->scoreBoard->isOneTheScoreDifference())
+    if($this->scoreKeeper->isOneTheScoreDifference())
       return $this->scoreFormatter->advantageMessage($advantagedPlayerName);
 
     return $this->scoreFormatter->winMessage($advantagedPlayerName);
   }
 
   public function getAdvantagedPlayerName() {
-    if($this->scoreBoard->isPlayer1Advantaged())
+    if($this->scoreKeeper->isPlayer1Advantaged())
       return $this->player1->getName();
       
     return $this->player2->getName();

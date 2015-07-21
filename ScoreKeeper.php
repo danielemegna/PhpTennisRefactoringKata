@@ -1,6 +1,6 @@
 <?php
 
-class ScoreBoard
+class ScoreKeeper
 {
   private $player1Score;
   private $player2Score;
