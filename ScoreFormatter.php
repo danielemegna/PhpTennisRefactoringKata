@@ -2,16 +2,16 @@
 
 class ScoreFormatter
 {
-  public function defaultMessage($player1Score, $player2Score) {
-    return $this->scoreToString($player1Score)."-".
-      $this->scoreToString($player2Score);
-  }
+  private $scoreDictionary = [
+      0 => "Love",
+      1 => "Fifteen",
+      2 => "Thirty",
+      3 => "Forty",
+    ];
 
-  public function tieMessage($score) {
-    return ($score < 3 ?
-      $this->scoreToString($score)."-All" : 
-      $this->deuceString()
-    );
+  public function defaultMessage($score1, $score2) {
+    return $this->scoreToString($score1).
+      "-".$this->scoreToString($score2);
   }
 
   public function winMessage($playerName) {
@@ -22,18 +22,18 @@ class ScoreFormatter
     return "Advantage " . $playerName;
   }
 
+  public function tieMessage($score) {
+    return ($score < 3 ?
+      $this->scoreToString($score)."-All" : 
+      $this->deuceString()
+    );
+  }
+
   private function deuceString() {
     return "Deuce";
   }
 
   private function scoreToString($score) {
-    $dictionary = [
-      0 => "Love",
-      1 => "Fifteen",
-      2 => "Thirty",
-      3 => "Forty",
-    ];
-
-    return $dictionary[$score];
+    return $this->scoreDictionary[$score];
   }
 }
