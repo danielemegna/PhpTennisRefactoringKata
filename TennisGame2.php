@@ -3,6 +3,7 @@
 require_once "TennisGame.php";
 require_once "Player.php";
 require_once "ScoreFormatter.php";
+require_once "ScoreBoard.php";
 
 class TennisGame2 implements TennisGame
 {
@@ -10,6 +11,7 @@ class TennisGame2 implements TennisGame
   private $player2;
 
   private $scoreFormatter;
+  private $scoreBoard;
 
   public function __construct($player1Name, $player2Name)
   {
@@ -17,27 +19,28 @@ class TennisGame2 implements TennisGame
     $this->player2 = new Player($player2Name);
 
     $this->scoreFormatter = new ScoreFormatter();
+    $this->scoreBoard = new ScoreBoard();
   }
 
   public function wonPoint($playerName)
   {
     if ($playerName == $this->player1->getName()) {
-      $this->player1->increaseScore();
+      $this->scoreBoard->increasePlayer1Score();
       return;
     }
 
-    $this->player2->increaseScore();
+    $this->scoreBoard->increasePlayer2Score();
   }
 
   public function getScore()
   {
     if($this->thereIsATie())
-      return $this->scoreFormatter->tieMessage($this->player1->getScore());
+      return $this->scoreFormatter->tieMessage($this->scoreBoard->getPlayer1Score());
 
     if($this->areScoresUnderFour()) {
       return $this->scoreFormatter->defaultMessage(
-        $this->player1->getScore(),
-        $this->player2->getScore()
+        $this->scoreBoard->getPlayer1Score(),
+        $this->scoreBoard->getPlayer2Score()
       );
     }
 
@@ -50,23 +53,23 @@ class TennisGame2 implements TennisGame
   }
 
   private function thereIsATie() {
-    return $this->player1->getScore() == $this->player2->getScore();
+    return $this->scoreBoard->getPlayer1Score() == $this->scoreBoard->getPlayer2Score();
   }
 
   private function areScoresUnderFour() {
-    return $this->player1->getScore() < 4 &&
-      $this->player2->getScore() < 4;
+    return $this->scoreBoard->getPlayer1Score() < 4 &&
+      $this->scoreBoard->getPlayer2Score() < 4;
   }
 
   private function getAdvantagedPlayerName() {
-    if($this->player1->getScore() > $this->player2->getScore())
+    if($this->scoreBoard->getPlayer1Score() > $this->scoreBoard->getPlayer2Score())
       return $this->player1->getName();
       
     return $this->player2->getName();
   }
 
   private function isOneTheScoreDifference() {
-    $scoreDifference = $this->player1->getScore() - $this->player2->getScore();
+    $scoreDifference = $this->scoreBoard->getPlayer1Score() - $this->scoreBoard->getPlayer2Score();
     return (abs($scoreDifference) == 1);
   }
 }
