@@ -34,10 +34,10 @@ class TennisGame2 implements TennisGame
 
   public function getScore()
   {
-    if($this->thereIsATie())
+    if($this->scoreBoard->thereIsATie())
       return $this->scoreFormatter->tieMessage($this->scoreBoard->getPlayer1Score());
 
-    if($this->areScoresUnderFour()) {
+    if($this->scoreBoard->areScoresUnderFour()) {
       return $this->scoreFormatter->defaultMessage(
         $this->scoreBoard->getPlayer1Score(),
         $this->scoreBoard->getPlayer2Score()
@@ -46,30 +46,17 @@ class TennisGame2 implements TennisGame
 
     $advantagedPlayerName = $this->getAdvantagedPlayerName();
 
-    if($this->isOneTheScoreDifference())
+    if($this->scoreBoard->isOneTheScoreDifference())
       return $this->scoreFormatter->advantageMessage($advantagedPlayerName);
 
     return $this->scoreFormatter->winMessage($advantagedPlayerName);
   }
 
-  private function thereIsATie() {
-    return $this->scoreBoard->getPlayer1Score() == $this->scoreBoard->getPlayer2Score();
-  }
-
-  private function areScoresUnderFour() {
-    return $this->scoreBoard->getPlayer1Score() < 4 &&
-      $this->scoreBoard->getPlayer2Score() < 4;
-  }
-
-  private function getAdvantagedPlayerName() {
-    if($this->scoreBoard->getPlayer1Score() > $this->scoreBoard->getPlayer2Score())
+  public function getAdvantagedPlayerName() {
+    if($this->scoreBoard->isPlayer1Advantaged())
       return $this->player1->getName();
       
     return $this->player2->getName();
   }
 
-  private function isOneTheScoreDifference() {
-    $scoreDifference = $this->scoreBoard->getPlayer1Score() - $this->scoreBoard->getPlayer2Score();
-    return (abs($scoreDifference) == 1);
-  }
 }
