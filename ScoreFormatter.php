@@ -9,7 +9,7 @@ class ScoreFormatter
       3 => "Forty",
     ];
 
-  public function defaultMessage($score1, $score2) {
+  public function standardMessage($score1, $score2) {
     return $this->scoreToString($score1).
       "-".$this->scoreToString($score2);
   }

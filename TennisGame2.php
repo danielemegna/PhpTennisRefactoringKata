@@ -38,14 +38,13 @@ class TennisGame2 implements TennisGame
       return $this->scoreFormatter->tieMessage($this->scoreKeeper->getPlayer1Score());
 
     if($this->scoreKeeper->areScoresUnderFour()) {
-      return $this->scoreFormatter->defaultMessage(
+      return $this->scoreFormatter->standardMessage(
         $this->scoreKeeper->getPlayer1Score(),
         $this->scoreKeeper->getPlayer2Score()
       );
     }
 
     $advantagedPlayerName = $this->getAdvantagedPlayerName();
-
     if($this->scoreKeeper->isOneTheScoreDifference())
       return $this->scoreFormatter->advantageMessage($advantagedPlayerName);
 
