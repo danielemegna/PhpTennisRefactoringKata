@@ -1,5 +1,7 @@
 <?php
 
+require_once "Score.php";
+
 class StandardScore extends Score {
 
   public function isMyScenario() {

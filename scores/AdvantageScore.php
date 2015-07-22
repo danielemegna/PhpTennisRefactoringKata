@@ -1,5 +1,7 @@
 <?php
 
+require_once "Score.php";
+
 class AdvantageScore extends Score {
 
   public function isMyScenario() {
