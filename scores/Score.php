@@ -2,8 +2,8 @@
 
 abstract class Score {
 
-  protected $scoreKeeper;
   private $namesRegister;
+  protected $scoreKeeper;
 
   private $scoreDictionary = [
       0 => "Love",

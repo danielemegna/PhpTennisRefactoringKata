@@ -7,13 +7,13 @@ require_once "scores/WinScore.php";
 
 class Referee {
 
-  private $scoreKeeper;
   private $namesRegister;
+  private $scoreKeeper;
   private $chainOfScoreTypes;
 
   function __construct($namesRegister, $scoreKeeper) {
-    $this->scoreKeeper = $scoreKeeper;
     $this->namesRegister = $namesRegister;
+    $this->scoreKeeper = $scoreKeeper;
     $this->chainOfScoreTypes = ["TieScore", "StandardScore", "AdvantageScore", "WinScore"];
   }
 
