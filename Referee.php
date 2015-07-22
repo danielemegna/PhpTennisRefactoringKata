@@ -9,10 +9,12 @@ class Referee {
 
   private $scoreKeeper;
   private $namesRegister;
+  private $chainOfScoreTypes;
 
   function __construct($namesRegister, $scoreKeeper) {
     $this->scoreKeeper = $scoreKeeper;
     $this->namesRegister = $namesRegister;
+    $this->chainOfScoreTypes = ["TieScore", "StandardScore", "AdvantageScore", "WinScore"];
   }
 
   public function wonPoint($playerName) {
@@ -25,15 +27,7 @@ class Referee {
   }
 
   public function getScore() {
-
-    $chainOfScoreTypes = [
-      "TieScore",
-      "StandardScore",
-      "AdvantageScore",
-      "WinScore"
-    ];
-
-    foreach($chainOfScoreTypes as $scoreType) {
+    foreach($this->chainOfScoreTypes as $scoreType) {
       $score = new $scoreType($this->namesRegister, $this->scoreKeeper);
       if($score->isMyScenario())
         return $score->toString();
