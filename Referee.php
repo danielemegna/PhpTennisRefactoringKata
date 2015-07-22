@@ -7,7 +7,7 @@ require_once "scores/AdvantageScore.php";
 require_once "scores/WinScore.php";
 
 class Referee {
-  public function generateScore($names, $scoreKeeper) {
+  public function generateScore($namesRegister, $scoreKeeper) {
 
     $chainOfScoreTypes = [
       "TieScore",
@@ -17,7 +17,7 @@ class Referee {
     ];
 
     foreach($chainOfScoreTypes as $scoreType) {
-      $score = new $scoreType($names, $scoreKeeper);
+      $score = new $scoreType($namesRegister, $scoreKeeper);
       if($score->isMyScenario())
         return $score;
     }

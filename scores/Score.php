@@ -3,7 +3,8 @@
 abstract class Score {
 
   protected $scoreKeeper;
-  private $names;
+  private $namesRegister;
+
   private $scoreDictionary = [
       0 => "Love",
       1 => "Fifteen",
@@ -11,8 +12,8 @@ abstract class Score {
       3 => "Forty",
     ];
   
-  function __construct($names, $scoreKeeper) {
-    $this->names = $names;
+  function __construct($namesRegister, $scoreKeeper) {
+    $this->namesRegister = $namesRegister;
     $this->scoreKeeper = $scoreKeeper;
   }
 
@@ -24,8 +25,8 @@ abstract class Score {
 
   protected function getAdvantagedPlayerName() {
     if($this->scoreKeeper->isPlayer1Advantaged())
-      return $this->names[0];
+      return $this->namesRegister->getPlayer1Name();
       
-    return $this->names[1];
+    return $this->namesRegister->getPlayer2Name();
   }
 }
