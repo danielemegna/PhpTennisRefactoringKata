@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+//require_once 'PHPUnit/Framework/TestSuite.php';
 
 /**
  * Test suite - Loads and runs all tests
