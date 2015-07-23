@@ -31,10 +31,12 @@ Towards the end of my refactoring, I decided to get out TennisGame2 from any res
 Indeed, TennisGame2 has the only goal to receive messages from outside (through the TennisGame interface contract) and foreward them to another class, the Referee.
 Therefore, TennisGame2 in its constructor, build the **Referee** collaborator through the constructor.
 
-As in a real tennis game, Referee class is the orchestrator: it coordinates the game flow and use two collaborators to keeping track of the current game situation (NamesRegister and ScoreKeeper).
+As in a real tennis game, Referee class is the orchestrator: it coordinates the game flow and use two collaborators to keeping track of the current game situation, namely *NamesRegister* and *ScoreKeeper*.
 
 Using the **ScoreKeeper** the *Referee* can:
 - keeps track of the current score of the two players
 - ask to it some easy evaluation, like "there is a tie situation?" or "scores are both under 4?"
 
-Using the **NamesRegister** the *Referee* can simply "annotate" the players names.
+Using the **NamesRegister** the *Referee* can simply "annotate" the players names and fetch them when it needs.
+
+The *getScore* responsabilites of the *Referee* (the core of the program), is handled with a strategy pattern through a chain of "score scenarios". A **Score** abstract class defines what a Score has to implement to be used in the chain. The *Referee* class, in order to handle the *getScore* request, loops a ordered list of score implementations and for each asks to a new instance of it "is this your scenario?". If the current score implementation recognizes the scenario as compatible, it will handle the request. Otherwise, the request is demanded to the next score implementation. Of course, every score implementation needs access to the ScoreKeeper (in order to recognize the scenario) and the NamesRegister (in order to fetch the player names if it needs) passed through the constructor.
